@@ -1,26 +1,47 @@
 "use strict";
 
 function HashStorageFunc() {
-  let self = this,
-    drinkStorage = {};
+  let self = this;
+      self.storage = {};
 
   self.addValue = function(key, value) {
-      drinkStorage[key] = value;//Добавление перепишет имеющийся поверх, я так понял? Не нашёл об этом информации.
+      self.storage[key] = value;
   };
   self.getValue = function(key) {
-    return drinkStorage[key];
+    return self.storage[key];
   };
   self.deleteValue = function(key) {
-    if (( key in drinkStorage ) == true ){
-    delete drinkStorage[key];//если сработает, вернёт true
-    } else {//Думал, что оно и без этого вернёт false
+    if (( key in self.storage ) == true ){
+    delete self.storage[key];
+    return true;
+    } else {
       return false
     }
   };
   self.getKeys = function() {
-    let k, storage = [];
-    for (k in drinkStorage)
-      storage.push(k);
-    return storage;//Я так понимаю он сработает после всех итераций перебора?
+    let k, st = [];
+    for (k in self.storage)
+      st.push(k);
+    return st;
   };
+};
+let drinkStorage = new HashStorageFunc();
+
+function drinkInfo() {
+  let name = prompt ('Введите название коктеля');
+  let recept = prompt ('Введите рецепт');
+  let alk = confirm ('Коктель алкогольный?');
+  let info = {
+    name : {recept : alk}//Надеюсь, одинаковых лецептов быть не должно?
+  };
+  drinkStorage.addValue ( name , info );
+};
+function getDrinkInfo ( name ) {
+  drinkStorage.getValue ( name );
+};
+function deleteKoktel( name ) {
+  drinkStorage.deleteValue ( name );
+};
+function getName () {
+  alert(drinkStorage.getKeys());
 };
