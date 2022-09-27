@@ -8,7 +8,13 @@ function HashStorageFunc() {
       self.storage[key] = value;
   };
   self.getValue = function(key) {
-    return self.storage[key];
+    let ret;
+    if (key in self.storage) {
+    ret = key;
+      for ( let i in self.storage[key] )
+      ret = ret + '/' + self.storage[i];
+    }
+    return ret;
   };
   self.deleteValue = function(key) {
     if (( key in self.storage ) == true ){
@@ -32,16 +38,25 @@ function drinkInfo() {
   let recept = prompt ('Введите рецепт');
   let alk = confirm ('Коктель алкогольный?');
   let info = {
-    name : {recept : alk}//Надеюсь, одинаковых лецептов быть не должно?
+    name : {
+      recept,
+      alk
+    }
   };
   drinkStorage.addValue ( name , info );
 };
-function getDrinkInfo ( name ) {
-  drinkStorage.getValue ( name );
+
+function getDrinkInfo () {
+  let name = prompt ('Введите название коктеля');
+  let n = drinkStorage.getValue ( name );
+  alert(n);
 };
-function deleteKoktel( name ) {
+
+function deleteKoktel() {
+  let name = prompt ('Введите название коктеля');
   drinkStorage.deleteValue ( name );
 };
+
 function getName () {
   alert(drinkStorage.getKeys());
 };
