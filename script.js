@@ -8,13 +8,7 @@ function HashStorageFunc() {
       self.storage[key] = value;
   };
   self.getValue = function(key) {
-    let ret;
-    if (key in self.storage) {
-    ret = key;
-      for ( let i in self.storage[key] )
-      ret = ret + '/' + self.storage[i];
-    }
-    return ret;
+    return self.storage[key];
   };
   self.deleteValue = function(key) {
     if (( key in self.storage ) == true ){
@@ -31,32 +25,48 @@ function HashStorageFunc() {
     return st;
   };
 };
+
 let drinkStorage = new HashStorageFunc();
 
 function drinkInfo() {
-  let name = prompt ('Введите название коктеля');
+  let key = prompt ('Введите название коктеля');
   let recept = prompt ('Введите рецепт');
   let alk = confirm ('Коктель алкогольный?');
-  let info = {
-    name : {
+  let value = {
+    key : {
       recept,
       alk
     }
   };
-  drinkStorage.addValue ( name , info );
+  drinkStorage.addValue ( key , value );
 };
 
 function getDrinkInfo () {
-  let name = prompt ('Введите название коктеля');
-  let n = drinkStorage.getValue ( name );
-  alert(n);
+  let key = prompt ('Введите название коктеля');
+  let n = drinkStorage.getValue ( key );
+  let a;
+  if ( n == undefined)
+    alert('Такого напитка нет');
+  else {
+      if (n.key.alk == true) {
+      a = 'Алкогольный напиток ';
+    } else {
+      a = 'Безалкогольный напиток ';
+    }
+  }
+    alert(a+'"'+key+'"'+'\n'+'Рецепт приготовления:\n'+n.key.recept);
 };
 
 function deleteKoktel() {
-  let name = prompt ('Введите название коктеля');
-  drinkStorage.deleteValue ( name );
+  let key = prompt ('Введите название коктеля');
+  drinkStorage.deleteValue ( key );
 };
 
 function getName () {
-  alert(drinkStorage.getKeys());
+  let a = drinkStorage.getKeys;
+    if ( a()[0] == undefined ) {
+      alert('В хранилище нет ни одного напитка');
+    } else {
+       alert(a());
+   }
 };
