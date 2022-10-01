@@ -53,8 +53,8 @@ function getDrinkInfo () {
     } else {
       a = 'Безалкогольный напиток ';
     }
-  }
     alert(a+'"'+key+'"'+'\n'+'Рецепт приготовления:\n'+n.key.recept);
+  };
 };
 
 function deleteKoktel() {
